@@ -33,6 +33,10 @@ public class CarDTOMapper implements Function<CarDTO, Car> {
         Manufacturer manufacturer = manufacturerService.findById(carDTO.manufacturerId());
         Model model = modelService.findById(carDTO.modelId());
         Category category = categoryService.findById(carDTO.categoryId());
-        return new Car(manufacturer, carDTO.year(), model, category);
+        if (carDTO.carId() == 0) {
+            return new Car(manufacturer, carDTO.year(), model, category);
+        } else {
+            return new Car(carDTO.carId(), manufacturer, carDTO.year(), model, category);
+        }
     }
 }
