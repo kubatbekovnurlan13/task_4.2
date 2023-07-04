@@ -37,4 +37,14 @@ public class Car {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
+    public Car(
+            Manufacturer manufacturer,
+            int year,
+            Model model,
+            Category category) {
+        this.manufacturer = manufacturer;
+        this.year = year;
+        this.model = model;
+        this.category = category;
+    }
 }

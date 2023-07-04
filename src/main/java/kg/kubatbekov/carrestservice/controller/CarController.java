@@ -1,5 +1,6 @@
 package kg.kubatbekov.carrestservice.controller;
 
+import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
 import kg.kubatbekov.carrestservice.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,14 @@ public class CarController {
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> save(@RequestBody Car car) {
-        carService.save(car);
+    public ResponseEntity<Object> save(@RequestBody CarDTO carDTO) {
+        carService.save(carDTO);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Car> update(@RequestBody Car car) {
-        Car updated = carService.update(car);
+    public ResponseEntity<Car> update(@RequestBody CarDTO carDTO) {
+        Car updated = carService.update(carDTO);
         if (updated == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -63,5 +64,4 @@ public class CarController {
 //           "modelId": 6,
 //           "categoryId": 6
 //    }
-
 }

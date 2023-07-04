@@ -3,21 +3,24 @@ VALUES ('category_1'),
        ('category_2'),
        ('category_3'),
        ('category_4'),
-       ('category_5');
+       ('category_5'),
+       ('category_6');
 
 insert into manufacturers (manufacturer_name)
 VALUES ('manufacturer_1'),
        ('manufacturer_2'),
        ('manufacturer_3'),
        ('manufacturer_4'),
-       ('manufacturer_5');
+       ('manufacturer_5'),
+       ('manufacturer_6');
 
 insert into models (model_name)
 VALUES ('model_1'),
        ('model_2'),
        ('model_3'),
        ('model_4'),
-       ('model_5');
+       ('model_5'),
+       ('model_6');
 
 insert into cars (year, manufacturer_id, model_id, category_id)
 VALUES (2022, 1, 1, 1),
