@@ -58,10 +58,10 @@ public class CarController {
 
 
 //    {
-//        "year": 2100,
-//            "manufacturer_id": 6,
-//            "model_id": 6,
-//            "category_id": 6
+//           "year": 2100,
+//           "manufacturerId": 6,
+//           "modelId": 6,
+//           "categoryId": 6
 //    }
 
 }
