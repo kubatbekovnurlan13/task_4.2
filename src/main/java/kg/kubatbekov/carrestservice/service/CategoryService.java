@@ -3,10 +3,12 @@ package kg.kubatbekov.carrestservice.service;
 import kg.kubatbekov.carrestservice.model.Category;
 import kg.kubatbekov.carrestservice.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -41,8 +43,10 @@ public class CategoryService {
         categoryRepository.saveAll(categories);
     }
 
-    public Category findByCategoryName(String name) {
-        return categoryRepository.findByCategoryName(name).get();
+    public List<Category> findCategoriesByPagination(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("categoryName").ascending());
+        Page<Category> pagingCategories = categoryRepository.findAll(pageRequest);
+        return pagingCategories.getContent();
     }
-
 }

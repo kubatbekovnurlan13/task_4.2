@@ -1,6 +1,5 @@
 package kg.kubatbekov.carrestservice.model;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

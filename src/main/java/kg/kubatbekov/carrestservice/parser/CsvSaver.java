@@ -53,7 +53,6 @@ public class CsvSaver {
 
             saveCars();
             System.out.println("saveCars...");
-
             System.out.println("CSV saver done...");
         }
     }

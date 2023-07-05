@@ -29,6 +29,14 @@ public class ModelController {
         return modelService.findAll();
     }
 
+    //    http://localhost:8081/api/v1/cars/findAllWithPaging?pageNo=0&pageSize=20
+    @GetMapping(path = "/findAllWithPaging", produces = "application/json")
+    public List<Model> getModelsWithPaging(@RequestParam(defaultValue = "0") Integer pageNo,
+                                           @RequestParam(defaultValue = "10") Integer pageSize) {
+        csvSaver.run();
+        return modelService.findModelsByPagination(pageNo, pageSize);
+    }
+
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveModel(@RequestBody Model model) {
         csvSaver.run();

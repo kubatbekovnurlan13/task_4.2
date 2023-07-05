@@ -29,6 +29,14 @@ public class CategoryController {
         return categoryService.findAll();
     }
 
+    //    http://localhost:8081/api/v1/cars/findAllWithPaging?pageNo=0&pageSize=20
+    @GetMapping(path = "/findAllWithPaging", produces = "application/json")
+    public List<Category> getCategoriesWithPaging(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
+        csvSaver.run();
+        return categoryService.findCategoriesByPagination(pageNo, pageSize);
+    }
+
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@RequestBody Category category) {
         csvSaver.run();

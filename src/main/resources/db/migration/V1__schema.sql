@@ -26,5 +26,9 @@ CREATE TABLE IF NOT EXISTS cars
     manufacturer_id int not null,
     year            int not null,
     model_id        int not null,
-    category_id     int not null
+    category_id     int not null,
+    foreign key (manufacturer_id) references manufacturers (manufacturer_id) ON DELETE CASCADE,
+    foreign key (model_id) references models (model_id) ON DELETE CASCADE,
+    foreign key (category_id) references categories (category_id) ON DELETE CASCADE
 );
+

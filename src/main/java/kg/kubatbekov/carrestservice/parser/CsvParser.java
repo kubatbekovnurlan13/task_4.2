@@ -42,16 +42,4 @@ public class CsvParser {
         }
         return records;
     }
-
-    public void read() {
-        List<List<String>> record = parse();
-
-        for (List<String> line : record) {
-            for (String word : line) {
-                System.out.print(word + ", ");
-            }
-            System.out.println(" ");
-        }
-    }
-
 }

@@ -3,6 +3,9 @@ package kg.kubatbekov.carrestservice.service;
 import kg.kubatbekov.carrestservice.model.Model;
 import kg.kubatbekov.carrestservice.repository.ModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +43,11 @@ public class ModelService {
         modelRepository.saveAll(models);
     }
 
-    public Model findByModelName(String name) {
-        return modelRepository.findByModelName(name).get();
-    }
+    public List<Model> findModelsByPagination(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("modelName").ascending());
 
+        Page<Model> pagingModels = modelRepository.findAll(pageRequest);
+        return pagingModels.getContent();
+    }
 }

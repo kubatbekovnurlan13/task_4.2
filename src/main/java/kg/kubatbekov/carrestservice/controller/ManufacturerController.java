@@ -1,6 +1,5 @@
 package kg.kubatbekov.carrestservice.controller;
 
-
 import kg.kubatbekov.carrestservice.model.Manufacturer;
 import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.ManufacturerService;
@@ -28,6 +27,14 @@ public class ManufacturerController {
         csvSaver.run();
 
         return manufacturerService.findAll();
+    }
+
+    //    http://localhost:8081/api/v1/cars/findAllWithPaging?pageNo=0&pageSize=20
+    @GetMapping(path = "/findAllWithPaging", produces = "application/json")
+    public List<Manufacturer> getManufacturersWithPaging(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                         @RequestParam(defaultValue = "10") Integer pageSize) {
+        csvSaver.run();
+        return manufacturerService.findManufacturersByPagination(pageNo, pageSize);
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)

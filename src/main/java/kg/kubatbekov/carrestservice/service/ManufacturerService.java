@@ -3,10 +3,12 @@ package kg.kubatbekov.carrestservice.service;
 import kg.kubatbekov.carrestservice.model.Manufacturer;
 import kg.kubatbekov.carrestservice.repository.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ManufacturerService {
@@ -41,7 +43,10 @@ public class ManufacturerService {
         manufacturerRepository.saveAll(manufacturers);
     }
 
-    public Manufacturer findByManufacturerName(String name){
-        return manufacturerRepository.findByManufacturerName(name).get();
+    public List<Manufacturer> findManufacturersByPagination(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("manufacturerName").ascending());
+        Page<Manufacturer> pagingManufacturers = manufacturerRepository.findAll(pageRequest);
+        return pagingManufacturers.getContent();
     }
 }

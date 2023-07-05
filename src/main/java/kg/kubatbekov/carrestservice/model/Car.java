@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "cars")
 @Getter
@@ -21,7 +19,7 @@ public class Car {
     private String carId;
 
     @JsonBackReference(value = "car_manufacturer")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id", referencedColumnName = "manufacturer_id")
     private Manufacturer manufacturer;
 
@@ -29,12 +27,12 @@ public class Car {
     private int year;
 
     @JsonBackReference(value = "car_model")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id", referencedColumnName = "model_id")
     private Model model;
 
     @JsonBackReference(value = "car_category")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 

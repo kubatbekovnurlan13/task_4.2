@@ -4,9 +4,7 @@ import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
 import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.CarService;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +15,26 @@ import java.util.List;
 @RequestMapping(path = "api/v1/cars")
 public class CarController {
     private final CarService carService;
-    @Value("${csv.file}")
-    private String pathOfCsv;
     private final CsvSaver csvSaver;
 
     @Autowired
     public CarController(CarService carService, CsvSaver csvSaver) {
         this.carService = carService;
         this.csvSaver = csvSaver;
+    }
+
+    //    http://localhost:8081/api/v1/cars?manufacturer=Audi&model=Q3&minYear=2000&maxYear=2023&category=SUV
+    @GetMapping(produces = "application/json")
+    public List<Car> findCarsWithParameters(
+            @RequestParam(value = "manufacturer", defaultValue = "default") String manufacturer,
+            @RequestParam(value = "model", defaultValue = "default") String model,
+            @RequestParam(value = "category", defaultValue = "default") String category,
+            @RequestParam(value = "minYear", defaultValue = "0") int minYear,
+            @RequestParam(value = "maxYear", defaultValue = "0") int maxYear
+    ) {
+        csvSaver.run();
+
+        return carService.findCarsWithParameters(manufacturer, model, category, minYear, maxYear);
     }
 
     @GetMapping(path = "/findAll", produces = "application/json")
@@ -34,6 +44,14 @@ public class CarController {
         List<Car> carsNew = carService.findAll();
         System.out.println("carsNew len: " + carsNew.size());
         return carsNew;
+    }
+
+    //    http://localhost:8081/api/v1/cars/findAllWithPaging?pageNo=0&pageSize=20
+    @GetMapping(path = "/findAllWithPaging", produces = "application/json")
+    public List<Car> getCarsWithPaging(@RequestParam(defaultValue = "0") Integer pageNo,
+                                       @RequestParam(defaultValue = "10") Integer pageSize) {
+        csvSaver.run();
+        return carService.findCarsByPagination(pageNo, pageSize);
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
