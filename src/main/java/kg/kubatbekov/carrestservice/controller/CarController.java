@@ -2,9 +2,9 @@ package kg.kubatbekov.carrestservice.controller;
 
 import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
-import kg.kubatbekov.carrestservice.parser.CsvParser;
 import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.CarService;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -29,26 +29,25 @@ public class CarController {
 
     @GetMapping(path = "/findAll", produces = "application/json")
     public List<Car> findAll() {
-        List<Car> cars = carService.findAll();
-        if(cars.isEmpty()){
-            csvSaver.run();
-        }
+        csvSaver.run();
 
         List<Car> carsNew = carService.findAll();
-
         System.out.println("carsNew len: " + carsNew.size());
         return carsNew;
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@RequestBody CarDTO carDTO) {
-        System.out.println("pathOfCsv: " + pathOfCsv);
+        csvSaver.run();
+
         carService.save(carDTO);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Car> update(@RequestBody CarDTO carDTO) {
+        csvSaver.run();
+
         Car updated = carService.update(carDTO);
         if (updated == null) {
             return ResponseEntity.notFound().build();
@@ -59,6 +58,8 @@ public class CarController {
 
     @GetMapping(path = "/{id}/findById", produces = "application/json")
     public ResponseEntity<Car> get(@PathVariable int id) {
+        csvSaver.run();
+
         Car found = carService.findById(id);
         if (found == null) {
             return ResponseEntity.notFound().build();
@@ -69,6 +70,8 @@ public class CarController {
 
     @DeleteMapping(path = "/{id}/delete", produces = "application/json")
     public ResponseEntity<Object> delete(@PathVariable int id) {
+        csvSaver.run();
+
         carService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

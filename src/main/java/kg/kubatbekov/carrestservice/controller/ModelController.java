@@ -1,6 +1,7 @@
 package kg.kubatbekov.carrestservice.controller;
 
 import kg.kubatbekov.carrestservice.model.Model;
+import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,25 +14,33 @@ import java.util.List;
 @RequestMapping(path = "api/v1/models")
 public class ModelController {
     private final ModelService modelService;
+    private final CsvSaver csvSaver;
 
     @Autowired
-    public ModelController(ModelService modelService) {
+    public ModelController(ModelService modelService, CsvSaver csvSaver) {
         this.modelService = modelService;
+        this.csvSaver = csvSaver;
     }
 
     @GetMapping(path = "/findAll", produces = "application/json")
     public List<Model> findAll() {
+        csvSaver.run();
+
         return modelService.findAll();
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveModel(@RequestBody Model model) {
+        csvSaver.run();
+
         modelService.save(model);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Model> updateModel(@RequestBody Model model) {
+        csvSaver.run();
+
         Model updatedModel = modelService.update(model);
         if (updatedModel == null) {
             return ResponseEntity.notFound().build();
@@ -42,6 +51,8 @@ public class ModelController {
 
     @GetMapping(path = "/{id}/findById", produces = "application/json")
     public ResponseEntity<Model> getModel(@PathVariable int id) {
+        csvSaver.run();
+
         Model foundModel = modelService.findById(id);
         if (foundModel == null) {
             return ResponseEntity.notFound().build();
@@ -52,6 +63,8 @@ public class ModelController {
 
     @DeleteMapping(path = "/{id}/delete", produces = "application/json")
     public ResponseEntity<Object> deleteModel(@PathVariable int id) {
+        csvSaver.run();
+
         modelService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

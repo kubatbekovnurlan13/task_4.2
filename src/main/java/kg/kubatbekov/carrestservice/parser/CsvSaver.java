@@ -36,12 +36,26 @@ public class CsvSaver {
     }
 
     public void run() {
-        setRecord();
+        List<Car> cars = carService.findAll();
+        if (cars.isEmpty()) {
+            System.out.println("CSV saver running...");
+            setRecord();
+            System.out.println("setRecord...");
 
-        saveModels(getModels());
-        saveCategories(getCategories());
-        saveManufacturers(getManufacturers());
-        saveCars();
+            saveModels(getModels());
+            System.out.println("saveModels...");
+
+            saveCategories(getCategories());
+            System.out.println("saveCategories...");
+
+            saveManufacturers(getManufacturers());
+            System.out.println("saveManufacturers...");
+
+            saveCars();
+            System.out.println("saveCars...");
+
+            System.out.println("CSV saver done...");
+        }
     }
 
     public void setRecord() {
