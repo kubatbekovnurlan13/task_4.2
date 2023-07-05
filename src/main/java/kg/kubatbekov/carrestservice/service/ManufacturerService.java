@@ -44,8 +44,7 @@ public class ManufacturerService {
     }
 
     public List<Manufacturer> findManufacturersByPagination(int pageNo, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("manufacturerName").ascending());
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("manufacturerName").ascending());
         Page<Manufacturer> pagingManufacturers = manufacturerRepository.findAll(pageRequest);
         return pagingManufacturers.getContent();
     }

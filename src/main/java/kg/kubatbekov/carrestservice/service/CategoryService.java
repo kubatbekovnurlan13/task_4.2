@@ -44,8 +44,7 @@ public class CategoryService {
     }
 
     public List<Category> findCategoriesByPagination(int pageNo, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("categoryName").ascending());
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("categoryName").ascending());
         Page<Category> pagingCategories = categoryRepository.findAll(pageRequest);
         return pagingCategories.getContent();
     }

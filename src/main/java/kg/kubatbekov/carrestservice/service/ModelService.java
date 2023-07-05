@@ -44,8 +44,7 @@ public class ModelService {
     }
 
     public List<Model> findModelsByPagination(int pageNo, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
-//        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("modelName").ascending());
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("modelName").ascending());
 
         Page<Model> pagingModels = modelRepository.findAll(pageRequest);
         return pagingModels.getContent();

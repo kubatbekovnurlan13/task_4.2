@@ -7,6 +7,7 @@ import kg.kubatbekov.carrestservice.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class CarService {
     }
 
     public List<Car> findCarsByPagination(int pageNo, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize, Sort.by("manufacturer").ascending());
         Page<Car> pagingCar = carRepository.findAll(pageRequest);
         return pagingCar.getContent();
     }
