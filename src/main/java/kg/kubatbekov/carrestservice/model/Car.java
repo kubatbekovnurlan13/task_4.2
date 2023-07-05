@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "cars")
 @Getter
@@ -16,11 +18,10 @@ import lombok.Setter;
 public class Car {
     @Id
     @Column(name = "car_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int carId;
+    private String carId;
 
     @JsonBackReference(value = "car_manufacturer")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manufacturer_id", referencedColumnName = "manufacturer_id")
     private Manufacturer manufacturer;
 
@@ -28,12 +29,12 @@ public class Car {
     private int year;
 
     @JsonBackReference(value = "car_model")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "model_id", referencedColumnName = "model_id")
     private Model model;
 
     @JsonBackReference(value = "car_category")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 

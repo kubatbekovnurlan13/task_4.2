@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "categories")
@@ -26,7 +27,12 @@ public class Category {
 
     @JsonManagedReference(value = "car_category")
     @OneToMany(mappedBy = "category",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private List<Car> cars;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
 }

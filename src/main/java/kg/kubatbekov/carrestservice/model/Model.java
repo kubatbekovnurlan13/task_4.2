@@ -23,6 +23,10 @@ public class Model {
     private String modelName;
 
     @JsonManagedReference(value = "car_model")
-    @OneToOne(mappedBy = "model")
+    @OneToOne(mappedBy = "model", cascade = CascadeType.ALL)
     private Car car;
+
+    public Model(String modelName) {
+        this.modelName = modelName;
+    }
 }

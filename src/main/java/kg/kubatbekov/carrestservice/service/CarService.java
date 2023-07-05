@@ -28,6 +28,10 @@ public class CarService {
         carRepository.save(carDTOMapper.apply(carDTO));
     }
 
+    public void save(Car car) {
+        carRepository.save(car);
+    }
+
     public Car findById(int id) {
         return carRepository.findById(id).get();
     }
@@ -38,5 +42,10 @@ public class CarService {
 
     public void deleteById(int id) {
         carRepository.deleteById(id);
+    }
+
+
+    public void saveAll(List<Car> cars) {
+        carRepository.saveAll(cars);
     }
 }

@@ -35,4 +35,13 @@ public class ModelService {
     public void deleteById(int id) {
         modelRepository.deleteById(id);
     }
+
+    public void saveAll(List<Model> models) {
+        modelRepository.saveAll(models);
+    }
+
+    public Model findByModelName(String name) {
+        return modelRepository.findByModelName(name).get();
+    }
+
 }

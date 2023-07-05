@@ -1,7 +1,7 @@
 package kg.kubatbekov.carrestservice.DTO;
 
 public record CarDTO(
-        int carId,
+        String carId,
         int manufacturerId,
         int year,
         int modelId,

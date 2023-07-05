@@ -2,8 +2,11 @@ package kg.kubatbekov.carrestservice.controller;
 
 import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
+import kg.kubatbekov.carrestservice.parser.CsvParser;
+import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +17,32 @@ import java.util.List;
 @RequestMapping(path = "api/v1/cars")
 public class CarController {
     private final CarService carService;
+    @Value("${csv.file}")
+    private String pathOfCsv;
+    private final CsvSaver csvSaver;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarService carService, CsvSaver csvSaver) {
         this.carService = carService;
+        this.csvSaver = csvSaver;
     }
 
     @GetMapping(path = "/findAll", produces = "application/json")
     public List<Car> findAll() {
-        return carService.findAll();
+        List<Car> cars = carService.findAll();
+        if(cars.isEmpty()){
+            csvSaver.run();
+        }
+
+        List<Car> carsNew = carService.findAll();
+
+        System.out.println("carsNew len: " + carsNew.size());
+        return carsNew;
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> save(@RequestBody CarDTO carDTO) {
+        System.out.println("pathOfCsv: " + pathOfCsv);
         carService.save(carDTO);
         return ResponseEntity.noContent().build();
     }

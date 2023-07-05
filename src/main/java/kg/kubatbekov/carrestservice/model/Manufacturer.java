@@ -28,6 +28,11 @@ public class Manufacturer {
 
     @JsonManagedReference(value = "car_manufacturer")
     @OneToMany(mappedBy = "manufacturer",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private List<Car> cars;
+
+    public Manufacturer(String manufacturerName) {
+        this.manufacturerName = manufacturerName;
+    }
 }

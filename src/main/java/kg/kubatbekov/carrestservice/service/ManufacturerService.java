@@ -36,4 +36,12 @@ public class ManufacturerService {
     public void deleteById(int id) {
         manufacturerRepository.deleteById(id);
     }
+
+    public void saveAll(List<Manufacturer> manufacturers) {
+        manufacturerRepository.saveAll(manufacturers);
+    }
+
+    public Manufacturer findByManufacturerName(String name){
+        return manufacturerRepository.findByManufacturerName(name).get();
+    }
 }
