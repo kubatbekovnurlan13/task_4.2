@@ -3,6 +3,7 @@ package kg.kubatbekov.carrestservice.controller;
 import kg.kubatbekov.carrestservice.model.Manufacturer;
 import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.ManufacturerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/manufacturers")
+@RequiredArgsConstructor
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
     private final CsvSaver csvSaver;
-
-    @Autowired
-    public ManufacturerController(ManufacturerService manufacturerService, CsvSaver csvSaver) {
-        this.manufacturerService = manufacturerService;
-        this.csvSaver = csvSaver;
-    }
 
     @GetMapping(path = "/findAll", produces = "application/json")
     public List<Manufacturer> findAll() {

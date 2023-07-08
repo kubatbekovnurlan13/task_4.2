@@ -4,6 +4,7 @@ import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
 import kg.kubatbekov.carrestservice.parser.CsvSaver;
 import kg.kubatbekov.carrestservice.service.CarService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/cars")
+@RequiredArgsConstructor
 public class CarController {
     private final CarService carService;
     private final CsvSaver csvSaver;
-
-    @Autowired
-    public CarController(CarService carService, CsvSaver csvSaver) {
-        this.carService = carService;
-        this.csvSaver = csvSaver;
-    }
 
     //    http://localhost:8081/api/v1/cars?manufacturer=Audi&model=Q3&minYear=2000&maxYear=2023&category=SUV
     @GetMapping(produces = "application/json")

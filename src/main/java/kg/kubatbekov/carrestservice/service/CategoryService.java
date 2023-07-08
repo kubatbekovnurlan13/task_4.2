@@ -2,6 +2,7 @@ package kg.kubatbekov.carrestservice.service;
 
 import kg.kubatbekov.carrestservice.model.Category;
 import kg.kubatbekov.carrestservice.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,13 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     public List<Category> findAll() {
         return categoryRepository.findAll();

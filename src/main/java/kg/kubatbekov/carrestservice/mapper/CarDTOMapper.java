@@ -1,5 +1,6 @@
-package kg.kubatbekov.carrestservice.DTO;
+package kg.kubatbekov.carrestservice.mapper;
 
+import kg.kubatbekov.carrestservice.DTO.CarDTO;
 import kg.kubatbekov.carrestservice.model.Car;
 import kg.kubatbekov.carrestservice.model.Category;
 import kg.kubatbekov.carrestservice.model.Manufacturer;
@@ -7,26 +8,17 @@ import kg.kubatbekov.carrestservice.model.Model;
 import kg.kubatbekov.carrestservice.service.CategoryService;
 import kg.kubatbekov.carrestservice.service.ManufacturerService;
 import kg.kubatbekov.carrestservice.service.ModelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class CarDTOMapper implements Function<CarDTO, Car> {
     private final ManufacturerService manufacturerService;
     private final CategoryService categoryService;
     private final ModelService modelService;
-
-    @Autowired
-    public CarDTOMapper(
-            ManufacturerService manufacturerService,
-            CategoryService categoryService,
-            ModelService modelService) {
-        this.manufacturerService = manufacturerService;
-        this.categoryService = categoryService;
-        this.modelService = modelService;
-    }
 
     @Override
     public Car apply(CarDTO carDTO) {

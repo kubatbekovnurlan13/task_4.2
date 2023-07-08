@@ -1,9 +1,10 @@
 package kg.kubatbekov.carrestservice.service;
 
 import kg.kubatbekov.carrestservice.DTO.CarDTO;
-import kg.kubatbekov.carrestservice.DTO.CarDTOMapper;
+import kg.kubatbekov.carrestservice.mapper.CarDTOMapper;
 import kg.kubatbekov.carrestservice.model.Car;
 import kg.kubatbekov.carrestservice.repository.CarRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,15 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CarService {
     private final CarRepository carRepository;
     private final CarDTOMapper carDTOMapper;
-
-    @Autowired
-    public CarService(CarRepository carRepository, CarDTOMapper carDTOMapper) {
-        this.carRepository = carRepository;
-        this.carDTOMapper = carDTOMapper;
-    }
 
     public List<Car> findAll() {
         return carRepository.findAll();

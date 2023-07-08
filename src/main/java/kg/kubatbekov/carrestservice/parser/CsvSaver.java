@@ -8,6 +8,7 @@ import kg.kubatbekov.carrestservice.service.CarService;
 import kg.kubatbekov.carrestservice.service.CategoryService;
 import kg.kubatbekov.carrestservice.service.ManufacturerService;
 import kg.kubatbekov.carrestservice.service.ModelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CsvSaver {
     private final CsvParser csvParser;
     private List<List<String>> record;
@@ -25,15 +27,6 @@ public class CsvSaver {
     private final CategoryService categoryService;
     private final ManufacturerService manufacturerService;
     private final CarService carService;
-
-    @Autowired
-    public CsvSaver(CsvParser csvParser, ModelService modelService, CategoryService categoryService, ManufacturerService manufacturerService, CarService carService) {
-        this.csvParser = csvParser;
-        this.modelService = modelService;
-        this.categoryService = categoryService;
-        this.manufacturerService = manufacturerService;
-        this.carService = carService;
-    }
 
     public void run() {
         List<Car> cars = carService.findAll();
